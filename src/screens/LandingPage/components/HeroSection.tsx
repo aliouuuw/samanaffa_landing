@@ -8,7 +8,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
   return (
     <section className="relative w-full h-screen overflow-hidden">
       {/* Background image */}
-      <div className="absolute w-full h-full lg:w-[1123px] lg:h-full top-0 left-0 object-cover">
+      <div className="absolute blur-sm md:blur-none w-full h-full lg:w-[1123px] lg:h-full top-0 left-0 object-cover">
         <img
           className="w-full h-full object-cover object-center"
           alt="Background element"
@@ -17,42 +17,35 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
       </div>
 
       {/* Éléments décoratifs - Cachés sur mobile */}
-      <div className="absolute inset-0 pointer-events-none hidden lg:block">
+      {/* <div className="absolute inset-0 pointer-events-none hidden lg:block">
         <div className="absolute w-24 h-24 bg-[#435933]/80 rounded-full top-32 left-32 animate-float"></div>
         <div
           className="absolute w-16 h-16 bg-[#C38D1C]/10 rounded-full bottom-40 right-40 animate-float"
           style={{ animationDelay: "2s" }}
         ></div>
-      </div>
+      </div> */}
 
       <div className="relative w-full h-full z-10">
         {/* Logo - Always top left */}
         <img
-          className="absolute w-[120px] h-[67px] sm:w-[140px] sm:h-[78px] lg:w-[194px] lg:h-[109px] top-4 left-4 sm:top-6 sm:left-6 lg:top-8 lg:left-8 xl:left-16 object-cover hover:scale-105 transition-transform duration-300 z-30"
+          className="absolute left-[40%] w-[120px] h-[67px] sm:w-[140px] sm:h-[78px] lg:w-[194px] lg:h-[109px] top-4 md:left-4 sm:top-6 sm:left-6 lg:top-8 lg:left-8 xl:left-16 object-cover hover:scale-105 transition-transform duration-300 z-30"
           alt="Logo SAMA NAFFA"
           src="/logo-sama-naffa-vf-logo-1.png"
         />
 
         {/* Main content container */}
-        <div className="flex flex-col md:grid md:grid-cols-3 md:gap-8 lg:gap-12 xl:gap-16 min-h-screen px-4 sm:px-6 pt-20">
+        <div className="flex flex-col md:grid md:grid-cols-3 md:gap-8 lg:gap-12 xl:gap-16 min-h-screen px-4 sm:px-6 pt-10">
           <div>
           </div>
           {/* Content section - Left side on desktop */}
-          <div className="md:rounded-2xl md:backdrop-blur-md md:px-2 md:py-4 md:my-4 flex-1 flex flex-col justify-center items-center text-center md:col-span-1 md:items-start md:text-start space-y-4 lg:space-y-6 max-w-lg md:max-w-none mx-auto md:mx-0 pb-8 md:pb-0">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full animate-fade-in shadow-sm text-xs sm:text-sm lg:text-base">
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#C38D1C] rounded-full animate-subtle-pulse"></div>
-              <span className="text-[#435933] font-semibold">
-                Épargne innovante
-              </span>
-            </div>
+          <div className="md:rounded-2xl md:backdrop-blur-sm md:bg-white/30 md:px-2 md:py-4 md:my-4 flex-1 flex flex-col justify-center items-center pt-20 text-center md:col-span-1 md:items-start md:text-start space-y-2 lg:space-y-6 max-w-lg md:max-w-none mx-auto md:mx-0 pb-8 md:pb-0">
 
             {/* Main title */}
             <h1 className="font-bold text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight animate-fade-in">
-              <span className="block text-[#435933] mb-1 sm:mb-2">
+              <span className=" md:block text-[#435933] mb-1 sm:mb-2">
                 Épargner
               </span>
-              <span className="block text-[#C38D1C]">intelligemment</span>
+              <span className="ml-2 md:ml-0 md:block text-[#C38D1C]">intelligemment</span>
             </h1>
 
             {/* Subtitle */}
@@ -78,18 +71,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
                 .
               </p>
 
-              {/* Feature badges */}
-              <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-medium text-gray-700 bg-white/80 px-2 sm:px-3 py-1 rounded-full">
-                  🔒 Sécurisé
-                </span>
-                <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-medium text-gray-700 bg-white/80 px-2 sm:px-3 py-1 rounded-full">
-                  📈 Rentable
-                </span>
-                <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-medium text-gray-700 bg-white/80 px-2 sm:px-3 py-1 rounded-full">
-                  ⚡ Simple
-                </span>
-              </div>
             </div>
 
             {/* CTA button */}
@@ -103,7 +84,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                 <span className="relative z-10">
-                  Je m'inscris gratuitement
+                  Je m'inscris
                 </span>
                 <svg
                   width="20"
@@ -123,10 +104,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
           </div>
 
           {/* Image section - Right side on desktop */}
-          <div className="flex-shrink-0 flex flex-col items-center justify-center pb-24 md:justify-end md:pb-0 md:col-span-1">
+          <div className="flex-shrink-0 flex flex-col items-center justify-center md:justify-end md:pb-0 md:col-span-1">
 
             {/* App store badges */}
-            <div className="w-full flex flex-col sm:flex-row justify-center items-center sm:gap-3 lg:gap-4">
+            <div className="w-full flex justify-center items-center sm:gap-3 lg:gap-4">
               <img
                 className="w-[120px] sm:w-[130px] lg:w-[135px] h-8 sm:h-9 lg:h-10 hover:scale-105 transition-transform duration-300 cursor-pointer"
                 alt="App Store"
