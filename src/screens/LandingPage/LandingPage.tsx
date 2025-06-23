@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ContactForm } from "../../components/ContactForm";
-import { formatCurrency } from "../../lib/utils";
 import { HeroSection } from "./components/HeroSection";
 import { SavingsPlanner } from "./components/ObjectivesSection";
 import { TestimonialsSection } from "./components/TestimonialsSection";
@@ -39,7 +38,7 @@ export const LandingPage = (): JSX.Element => {
 
   return (
     <div className="bg-white flex flex-row justify-center w-full">
-      <div className="bg-white w-full max-w-[1440px] relative">
+      <div className="bg-white w-full relative">
         <HeroSection onShowForm={() => handleShowForm()} />
         <SavingsPlanner onShowForm={handleShowForm} />
 

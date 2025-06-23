@@ -28,7 +28,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
       <div className="relative w-full h-full z-10">
         {/* Logo - Always top left */}
         <img
-          className="absolute left-[40%] w-[120px] h-[67px] sm:w-[140px] sm:h-[78px] lg:w-[194px] lg:h-[109px] top-4 md:left-4 sm:top-6 sm:left-6 lg:top-8 lg:left-8 xl:left-16 object-cover hover:scale-105 transition-transform duration-300 z-30"
+          className="absolute left-[40%] lg:left-[45%] w-[120px] h-[67px] sm:w-[140px] sm:h-[78px] lg:w-[194px] lg:h-[109px] top-4 object-cover hover:scale-105 transition-transform duration-300 z-30"
           alt="Logo SAMA NAFFA"
           src="/logo-sama-naffa-vf-logo-1.png"
         />
