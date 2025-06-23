@@ -39,7 +39,7 @@ export const LandingPage = (): JSX.Element => {
   return (
     <div className="bg-white flex flex-row justify-center w-full">
       <div className="bg-white w-full relative">
-        <HeroSection onShowForm={() => handleShowForm()} />
+        <HeroSection />
         <SavingsPlanner onShowForm={handleShowForm} />
 
         {/* Contact Form Section avec background vert clair - Responsive */}

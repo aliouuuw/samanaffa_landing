@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Card, CardContent } from './ui/card';
 import { CheckCircle, Loader2, AlertCircle, ChevronDown, User, Phone, Heart, Coins, Target, Calendar, TrendingUp, Wifi, WifiOff } from 'lucide-react';
 import { insertUserRegistration, UserRegistration, testSupabaseConnection } from '../lib/supabase';
-import { formatNumber, formatCurrency } from '../lib/utils';
+import { formatCurrency } from '../lib/utils';
 
 interface FormData {
   fullName: string;

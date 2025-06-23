@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface HeroSectionProps {
-  onShowForm: () => void;
-}
-
-export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
+export const HeroSection: React.FC = () => {
   return (
     <section className="relative w-full h-screen xl:h-[90vh] overflow-hidden">
       {/* Background image */}
@@ -81,12 +77,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
               style={{ animationDelay: "0.9s" }}
             >
               <button
-                onClick={onShowForm}
+                onClick={() => {
+                  window.location.href = "/#simulator";
+                }}
                 className="group relative px-6 sm:px-8 h-[52px] sm:h-[56px] lg:h-[60px] bg-gradient-to-r from-[#30461f] to-[#435933] hover:from-[#243318] hover:to-[#364529] rounded-xl lg:rounded-2xl text-white text-sm sm:text-base lg:text-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 lg:gap-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 overflow-hidden max-w-xs sm:max-w-sm md:max-w-none"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                 <span className="relative z-10">
-                  Je m'inscris
+                  Je me lance
                 </span>
                 <svg
                   width="20"
