@@ -220,14 +220,14 @@ export const SavingsPlanner: React.FC<SavingsPlannerProps> = ({
                             )}
 
                             {simulationMode === 'persona' && (
-                                <div className="space-y-3 animate-fade-in flex flex-col items-center justify-center">
+                                <div className="space-y-3 animate-fade-in flex flex-col items-center justify-center w-full">
                                     <p className="text-center text-gray-600 mb-6">Ou trouvez un profil qui vous ressemble pour commencer.</p>
-                                    <div className="flex justify-center">
-                                        <div className="flex flex-wrap justify-center items-start gap-4 max-w-4xl">
+                                    <div className="w-full">
+                                        <div className="flex items-center py-4 gap-4 lg:gap-6 px-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-thumb-rounded-full">
                                             {personas.map((persona, index) => (
                                                 <div
                                                     key={persona.id}
-                                                    className={`group flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 w-32 ${selectedPersona?.id === persona.id ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
+                                                    className={`group flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 flex-shrink-0 w-32 ${selectedPersona?.id === persona.id ? "opacity-100" : "opacity-70 hover:opacity-100"}`}
                                                     onClick={() => setSelectedPersona(persona)}
                                                     style={{ animationDelay: `${index * 0.05}s` }}
                                                 >
@@ -243,7 +243,7 @@ export const SavingsPlanner: React.FC<SavingsPlannerProps> = ({
                                         </div>
                                     </div>
                                     {selectedPersona && (
-                                        <div className="text-center p-3 mt-4 bg-white/80 rounded-lg border border-[#435933]/20 max-w-md mx-auto animate-fade-in">
+                                        <div className="text-center p-3 mt-2 bg-white/80 rounded-lg border border-[#435933]/20 max-w-md mx-auto animate-fade-in">
                                             <p className="text-sm text-gray-600 italic">« {selectedPersona.quote} »</p>
                                         </div>
                                     )}

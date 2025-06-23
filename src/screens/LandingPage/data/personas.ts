@@ -85,7 +85,7 @@ export const personas = [
     description: "Courageuse maman qui élève seule ses enfants",
     personalizedMessage:
       "Sécuriser l'avenir de vos enfants\nConstituez un fonds de sécurité pour leur éducation et leur bien-être",
-    emoji: "👩🏾‍👧",
+    emoji: "👩🏾",
     shortName: "Khady, maman courageuse",
     quote:
       "Tu fais beaucoup avec peu. Épargner, c'est aussi protéger tes enfants.",
