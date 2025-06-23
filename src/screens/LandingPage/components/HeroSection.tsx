@@ -6,7 +6,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
   return (
-    <section className="relative w-full h-screen overflow-hidden">
+    <section className="relative w-full h-screen xl:h-[90vh] overflow-hidden">
       {/* Background image */}
       <div className="absolute blur-sm md:blur-none w-full h-full lg:w-[1123px] lg:h-full top-0 left-0 object-cover">
         <img
@@ -36,11 +36,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
         </div>
 
         {/* Main content container */}
-        <div className="flex flex-col md:grid md:grid-cols-3 md:gap-8 lg:gap-12 xl:gap-16 min-h-screen px-4 sm:px-6 pt-10">
+        <div className="flex flex-col md:grid md:grid-cols-3 md:gap-8 lg:gap-12 xl:gap-16 min-h-screen px-4 sm:px-6 pt-10 xl:pt-0">
           <div>
           </div>
           {/* Content section - Left side on desktop */}
-          <div className="md:rounded-2xl md:backdrop-blur-sm md:bg-white/30 md:px-2 md:py-4 md:my-4 flex-1 flex flex-col justify-center items-center pt-20 text-center md:col-span-1 md:items-start md:text-start space-y-2 lg:space-y-6 max-w-lg md:max-w-none mx-auto md:mx-0 pb-8 md:pb-0">
+          <div className="flex-1 flex flex-col justify-center xl:justify-start items-center pt-20 xl:pt-40 text-center md:col-span-1 md:items-start md:text-start space-y-2 lg:space-y-6 max-w-lg md:max-w-none mx-auto md:mx-0 pb-8 md:pb-0">
 
             {/* Main title */}
             <h1 className="font-bold text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight animate-fade-in">
@@ -106,7 +106,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
           </div>
 
           {/* Image section - Right side on desktop */}
-          <div className="flex-shrink-0 flex flex-col items-center justify-center md:justify-end md:pb-0 md:col-span-1">
+          <div className="flex-shrink-0 flex flex-col items-center justify-center md:justify-end md:pb-0 md:col-span-1 xl:justify-start xl:mt-20">
 
             {/* App store badges */}
             <div className="w-full flex justify-center items-center sm:gap-3 lg:gap-4">
