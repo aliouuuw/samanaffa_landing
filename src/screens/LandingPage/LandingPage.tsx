@@ -21,11 +21,12 @@ const calculerCapitalFinal = (
   dureeMois: number,
   tauxAnnuel: number,
 ): { capitalFinal: number; interets: number } => {
-  const dureeAnnee = dureeMois / 12;
+  const tauxMensuel = tauxAnnuel / 12 / 100; // Convert annual rate to monthly and percentage to decimal
+  const capitalFinal = mensuel * ((Math.pow(1 + tauxMensuel, dureeMois) - 1) / tauxMensuel);
   const capitalVerse = mensuel * dureeMois;
-  const interets = capitalVerse * (tauxAnnuel / 100) * dureeAnnee;
+  const interets = capitalFinal - capitalVerse;
   return {
-    capitalFinal: capitalVerse + interets,
+    capitalFinal,
     interets,
   };
 };
