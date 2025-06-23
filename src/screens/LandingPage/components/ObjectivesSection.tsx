@@ -221,21 +221,29 @@ export const SavingsPlanner: React.FC<SavingsPlannerProps> = ({
 
                             {simulationMode === 'persona' && (
                                 <div className="space-y-3 animate-fade-in flex flex-col items-center justify-center">
-                                    <label className="block text-center text-gray-600 mb-2">Ou trouvez un profil qui vous ressemble pour commencer.</label>
-                                    <select
-                                        value={selectedPersona?.id || ""}
-                                        onChange={handlePersonaChange}
-                                        className="w-full max-w-md mx-auto p-3 lg:p-4 border-2 border-[#435933]/20 rounded-xl text-sm lg:text-base focus:border-[#435933] focus:outline-none transition-colors bg-[#e9f0e9] text-[#116237]"
-                                    >
-                                        <option disabled value="">-- Choisissez votre profil --</option>
-                                        {personas.map((persona) => (
-                                            <option key={persona.id} value={persona.id}>
-                                                {persona.emoji} {persona.name}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <p className="text-center text-gray-600 mb-6">Ou trouvez un profil qui vous ressemble pour commencer.</p>
+                                    <div className="flex justify-center">
+                                        <div className="flex flex-wrap justify-center items-start gap-4 max-w-4xl">
+                                            {personas.map((persona, index) => (
+                                                <div
+                                                    key={persona.id}
+                                                    className={`group flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 w-32 ${selectedPersona?.id === persona.id ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
+                                                    onClick={() => setSelectedPersona(persona)}
+                                                    style={{ animationDelay: `${index * 0.05}s` }}
+                                                >
+                                                    <div className={`w-[80px] h-[80px] lg:w-[100px] lg:h-[100px] rounded-full relative mb-2 flex items-center justify-center text-4xl lg:text-5xl transition-all duration-300 group-hover:shadow-lg ${selectedPersona?.id === persona.id ? "bg-gradient-to-br from-[#e8f5e8] to-[#d4f4d4] shadow-lg scale-110" : "bg-[#F2F8F4] group-hover:bg-gradient-to-br group-hover:from-[#e8f5e8] group-hover:to-[#d4f4d4]"}`}>
+                                                        {persona.emoji}
+                                                        {selectedPersona?.id === persona.id && <div className="absolute inset-0 rounded-full bg-[#435933]/10 animate-subtle-pulse"></div>}
+                                                    </div>
+                                                    <span className={`font-medium text-sm lg:text-base transition-colors duration-300 text-center ${selectedPersona?.id === persona.id ? "text-[#435933] font-bold" : "text-gray-800"}`}>
+                                                        {persona.name}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                     {selectedPersona && (
-                                         <div className="text-center p-3 mt-4 bg-white/80 rounded-lg border border-[#435933]/10 max-w-md mx-auto">
+                                        <div className="text-center p-3 mt-4 bg-white/80 rounded-lg border border-[#435933]/20 max-w-md mx-auto animate-fade-in">
                                             <p className="text-sm text-gray-600 italic">« {selectedPersona.quote} »</p>
                                         </div>
                                     )}
