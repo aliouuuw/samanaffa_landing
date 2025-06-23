@@ -26,12 +26,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onShowForm }) => {
       </div> */}
 
       <div className="relative w-full h-full z-10">
-        {/* Logo - Always top left */}
-        <img
-          className="absolute left-[40%] lg:left-[45%] w-[120px] h-[67px] sm:w-[140px] sm:h-[78px] lg:w-[194px] lg:h-[109px] top-4 object-cover hover:scale-105 transition-transform duration-300 z-30"
-          alt="Logo SAMA NAFFA"
-          src="/logo-sama-naffa-vf-logo-1.png"
-        />
+        {/* Logo - Centered using Flexbox */}
+        <div className="flex justify-center w-full pt-4">
+          <img
+            className="w-[120px] h-[67px] sm:w-[140px] sm:h-[78px] lg:w-[194px] lg:h-[109px] object-cover hover:scale-105 transition-transform duration-300"
+            alt="Logo SAMA NAFFA"
+            src="/logo-sama-naffa-vf-logo-1.png"
+          />
+        </div>
 
         {/* Main content container */}
         <div className="flex flex-col md:grid md:grid-cols-3 md:gap-8 lg:gap-12 xl:gap-16 min-h-screen px-4 sm:px-6 pt-10">
