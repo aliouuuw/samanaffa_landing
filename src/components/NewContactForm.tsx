@@ -6,7 +6,7 @@ import { Card, CardContent } from './ui/card';
 import { CheckCircle, Loader2, AlertCircle, ChevronDown, User, Phone, Heart, Coins, Target, Calendar, TrendingUp, Wifi, WifiOff } from 'lucide-react';
 import { insertUserRegistration, UserRegistration, testSupabaseConnection } from '../lib/supabase';
 import { formatCurrency } from '../lib/utils';
-import { Objective, Persona } from '../screens/LandingPage/data/types';
+import { Objective } from '../screens/LandingPage/data/types';
 
 interface FormData {
   fullName: string;
@@ -21,16 +21,13 @@ interface FormData {
   projectedAmount: number;
 }
 
-interface ContactFormProps {
+interface NewContactFormProps {
   selectedObjective: string;
   monthlyAmount: number;
   duration: number;
   projectedAmount: number;
   onObjectiveChange: (objective: Objective | null) => void;
-  onPersonaChange: (persona: Persona | null) => void;
   objectives: Objective[];
-  personas: Persona[];
-  simulationMode: 'objective' | 'persona' | null;
 }
 
 // Liste des pays avec leurs drapeaux
@@ -59,16 +56,13 @@ const countries = [
 
 const OTHER_MOTIVATION = 'Autre';
 
-export const ContactForm: React.FC<ContactFormProps> = ({
+export const NewContactForm: React.FC<NewContactFormProps> = ({
   selectedObjective,
   monthlyAmount,
   duration,
   projectedAmount,
   onObjectiveChange,
-  onPersonaChange,
   objectives,
-  personas,
-  simulationMode,
 }) => {
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
@@ -226,16 +220,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     
     if (motivationTitle === OTHER_MOTIVATION) {
         onObjectiveChange(null);
-        onPersonaChange(null);
-    } else if (simulationMode === 'objective') {
+    } else {
         const newObjective = objectives.find(o => o.titre === motivationTitle);
         if (newObjective) {
             onObjectiveChange(newObjective);
-        }
-    } else if (simulationMode === 'persona') {
-        const newPersona = personas.find(p => p.name === motivationTitle);
-        if (newPersona) {
-            onPersonaChange(newPersona);
         }
     }
   };
@@ -502,14 +490,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
 
                 {showMotivationDropdown && (
                   <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg md:rounded-xl z-50 max-h-60 overflow-y-auto shadow-lg">
-                    {[
-                      ...(simulationMode === 'objective'
-                        ? objectives.map(o => o.titre)
-                        : simulationMode === 'persona'
-                        ? personas.map(p => p.name)
-                        : []),
-                      OTHER_MOTIVATION
-                    ].map((motivation, index) => (
+                    {[...objectives.map(o => o.titre), OTHER_MOTIVATION].map((motivation, index) => (
                       <button
                         key={index}
                         type="button"
@@ -604,4 +585,4 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       </Card>
     </div>
   );
-};
+}; 

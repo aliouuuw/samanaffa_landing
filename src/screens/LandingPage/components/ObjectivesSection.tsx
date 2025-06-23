@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { Card, CardContent } from "../../../components/ui/card";
 import { formatCurrency } from "../../../lib/utils";
-import { personas, objectives } from "../data";
+import { Objective, Persona } from "../data/types";
 
 // --- HELPER FUNCTIONS & HOOKS ---
 
@@ -60,57 +60,47 @@ const calculerCapitalFinal = (
 };
 
 // --- PROPS ---
-interface FormSubmissionData {
-    objective: string;
-    monthlyAmount: number;
-    duration: number;
-    projectedAmount: number;
-}
 interface SavingsPlannerProps {
-  onShowForm: (data: FormSubmissionData) => void;
+  simulationMode: "objective" | "persona" | null;
+  setSimulationMode: Dispatch<SetStateAction<"objective" | "persona" | null>>;
+  selectedObjective: Objective | null;
+  setSelectedObjective: Dispatch<SetStateAction<Objective | null>>;
+  selectedPersona: Persona | null;
+  setSelectedPersona: Dispatch<SetStateAction<Persona | null>>;
+  duree: number;
+  setDuree: Dispatch<SetStateAction<number>>;
+  mensualite: number;
+  setMensualite: Dispatch<SetStateAction<number>>;
+  capitalFinal: number;
+  interets: number;
+  objectives: Objective[];
+  personas: Persona[];
+  onShowForm: () => void;
 }
 
 export const SavingsPlanner: React.FC<SavingsPlannerProps> = ({
+  simulationMode,
+  setSimulationMode,
+  selectedObjective,
+  setSelectedObjective,
+  selectedPersona,
+  setSelectedPersona,
+  duree,
+  setDuree,
+  mensualite,
+  setMensualite,
+  capitalFinal,
+  interets,
+  objectives,
+  personas,
   onShowForm,
 }) => {
   // --- STATE MANAGEMENT ---
-  const [simulationMode, setSimulationMode] = useState<"objective" | "persona" | null>(null);
-  const [selectedObjective, setSelectedObjective] = useState<number | null>(null);
-  const [selectedPersona, setSelectedPersona] = useState<string>("");
-  const [duree, setDuree] = useState(12);
-  const [mensualite, setMensualite] = useState(25000);
-  const [taux, setTaux] = useState(tauxParDuree(12));
+  // All state is lifted to LandingPage.tsx
 
   // --- DERIVED STATE & EFFECTS ---
-  const { capitalFinal, interets } = calculerCapitalFinal(mensualite, duree, taux);
   const animatedCapitalFinal = useAnimatedCounter(capitalFinal);
   const animatedInterests = useAnimatedCounter(interets);
-
-  const currentObjective = objectives.find((obj) => obj.id === selectedObjective) || null;
-  const selectedPersonaData = personas.find((p) => p.id === selectedPersona) || null;
-
-  useEffect(() => {
-    setTaux(tauxParDuree(duree));
-  }, [duree]);
-
-  // Update simulator when objective changes
-  useEffect(() => {
-    if (simulationMode === 'objective' && currentObjective) {
-      setDuree(currentObjective.duree);
-      setMensualite(currentObjective.mensualite);
-      setSelectedPersona(""); // Reset persona
-    }
-  }, [selectedObjective, simulationMode]);
-
-  // Update simulator when persona changes
-  useEffect(() => {
-    if (simulationMode === 'persona' && selectedPersonaData) {
-      setDuree(selectedPersonaData.duration);
-      setMensualite(selectedPersonaData.amount);
-      setSelectedObjective(null); // Reset objective
-    }
-  }, [selectedPersona, simulationMode]);
-
 
   // --- HANDLERS ---
   const handleModeChange = (mode: "objective" | "persona") => {
@@ -119,41 +109,29 @@ export const SavingsPlanner: React.FC<SavingsPlannerProps> = ({
     if (mode === 'objective') {
         const firstObjective = objectives[0];
         if (firstObjective) {
-            setSelectedObjective(firstObjective.id);
-            setDuree(firstObjective.duree);
-            setMensualite(firstObjective.mensualite);
+            setSelectedObjective(firstObjective);
         }
     } else {
         const firstPersona = personas[0];
          if (firstPersona) {
-            setSelectedPersona(firstPersona.id);
-            setDuree(firstPersona.duration);
-            setMensualite(firstPersona.amount);
+            setSelectedPersona(firstPersona);
         }
     }
   };
 
-  const handleObjectiveClick = (objectiveId: number) => {
-    setSelectedObjective(objectiveId);
+  const handleObjectiveClick = (objective: Objective) => {
+    setSelectedObjective(objective);
   };
   
   const handlePersonaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedPersona(e.target.value);
+    const persona = personas.find(p => p.id === e.target.value);
+    if(persona) {
+      setSelectedPersona(persona);
+    }
   };
 
   const handleStartSaving = () => {
-    const objectiveName = (simulationMode === 'objective' && currentObjective?.name) 
-        ? currentObjective.name
-        : (simulationMode === 'persona' && selectedPersonaData?.name)
-            ? selectedPersonaData.name
-            : "Plan personnalisé";
-
-    onShowForm({
-        objective: objectiveName,
-        monthlyAmount: mensualite,
-        duration: Math.round((duree / 12) * 10) / 10, // in years
-        projectedAmount: Math.round(capitalFinal),
-    });
+    onShowForm();
   }
 
   const adjustValue = (setter: React.Dispatch<React.SetStateAction<number>>, currentValue: number, change: number, min: number, max: number) => {
@@ -182,7 +160,7 @@ export const SavingsPlanner: React.FC<SavingsPlannerProps> = ({
                             <div className="relative bg-white/95 p-2 rounded-lg shadow-md transform transition-all duration-500 animate-bounce-subtle">
                                 <div className="flex flex-col items-center">
                                     <h3 className="text-xl font-semibold text-[#30461f] mb-2">Commmençons ?</h3>
-                                    <p className="text-gray-600 mb-2">Sélectionnez une méthode de simulation ci-dessous.</p>
+                                    <p className="text-gray-600 mb-2">Sélectionnez une méthode de simulation.</p>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#C38D1C] animate-bounce-subtle mt-1">
                                         <path d="M12 16L6 10H18L12 16Z" fill="currentColor"/>
                                     </svg>
@@ -219,19 +197,19 @@ export const SavingsPlanner: React.FC<SavingsPlannerProps> = ({
                                             {objectives.map((objective, index) => (
                                                 <div
                                                     key={objective.id}
-                                                    className={`group flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 ${selectedObjective === objective.id ? "opacity-100" : "opacity-60 hover:opacity-90"}`}
-                                                    onClick={() => handleObjectiveClick(objective.id)}
+                                                    className={`group flex flex-col items-center cursor-pointer transition-all duration-300 hover:scale-110 ${selectedObjective?.id === objective.id ? "opacity-100" : "opacity-60 hover:opacity-90"}`}
+                                                    onClick={() => handleObjectiveClick(objective)}
                                                     style={{ animationDelay: `${index * 0.05}s` }}
                                                 >
-                                                    <div className={`w-[80px] h-[80px] lg:w-[100px] lg:h-[100px] rounded-full relative mb-2 transition-all duration-300 group-hover:shadow-md ${selectedObjective === objective.id ? "bg-gradient-to-br from-[#e8f5e8] to-[#d4f4d4] shadow-lg scale-110" : "bg-[#F2F8F4]"}`}>
+                                                    <div className={`w-[80px] h-[80px] lg:w-[100px] lg:h-[100px] rounded-full relative mb-2 transition-all duration-300 group-hover:shadow-md ${selectedObjective?.id === objective.id ? "bg-gradient-to-br from-[#e8f5e8] to-[#d4f4d4] shadow-lg scale-110" : "bg-[#F2F8F4]"}`}>
                                                         <img
                                                             className="absolute w-[40px] h-[40px] lg:w-[50px] lg:h-[50px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-cover transition-transform duration-300 group-hover:scale-110"
                                                             alt={objective.name}
                                                             src={objective.icon}
                                                         />
-                                                         {selectedObjective === objective.id && <div className="absolute inset-0 rounded-full bg-[#435933]/10 animate-subtle-pulse"></div>}
+                                                         {selectedObjective?.id === objective.id && <div className="absolute inset-0 rounded-full bg-[#435933]/10 animate-subtle-pulse"></div>}
                                                     </div>
-                                                    <span className={`font-medium text-sm lg:text-base transition-colors duration-300 text-center ${selectedObjective === objective.id ? "text-[#435933] font-bold" : "text-[#060606]"}`}>
+                                                    <span className={`font-medium text-sm lg:text-base transition-colors duration-300 text-center ${selectedObjective?.id === objective.id ? "text-[#435933] font-bold" : "text-[#060606]"}`}>
                                                         {objective.name}
                                                     </span>
                                                 </div>
@@ -245,7 +223,7 @@ export const SavingsPlanner: React.FC<SavingsPlannerProps> = ({
                                 <div className="space-y-3 animate-fade-in flex flex-col items-center justify-center">
                                     <label className="block text-center text-gray-600 mb-2">Ou trouvez un profil qui vous ressemble pour commencer.</label>
                                     <select
-                                        value={selectedPersona}
+                                        value={selectedPersona?.id || ""}
                                         onChange={handlePersonaChange}
                                         className="w-full max-w-md mx-auto p-3 lg:p-4 border-2 border-[#435933]/20 rounded-xl text-sm lg:text-base focus:border-[#435933] focus:outline-none transition-colors bg-[#e9f0e9] text-[#116237]"
                                     >
@@ -256,9 +234,9 @@ export const SavingsPlanner: React.FC<SavingsPlannerProps> = ({
                                             </option>
                                         ))}
                                     </select>
-                                    {selectedPersonaData && (
+                                    {selectedPersona && (
                                          <div className="text-center p-3 mt-4 bg-white/80 rounded-lg border border-[#435933]/10 max-w-md mx-auto">
-                                            <p className="text-sm text-gray-600 italic">« {selectedPersonaData.quote} »</p>
+                                            <p className="text-sm text-gray-600 italic">« {selectedPersona.quote} »</p>
                                         </div>
                                     )}
                                 </div>
