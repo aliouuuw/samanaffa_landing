@@ -1,19 +1,19 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type PluginOption } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
-import { nitro } from 'nitro/vite'
 
-export default defineConfig((): any => {
-  let nitroPlugin: ReturnType<typeof nitro> | undefined
+export default defineConfig(async (): Promise<any> => {
+  let nitroPlugin: PluginOption | undefined
   try {
+    const { nitro } = await import('nitro/vite')
     nitroPlugin = nitro({
       preset: 'bun',
       sourcemap: false,
     })
   } catch (err) {
-    console.warn('Failed to initialize nitro/vite plugin; continuing without it.', err)
+    console.warn('Nitro plugin not available; skipping.', err)
   }
 
   return {
