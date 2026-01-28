@@ -1,0 +1,12 @@
+# Nixpacks configuration for Bun monorepo
+[phases.setup]
+nixPkgs = ["...", "bun"]
+
+[phases.install]
+cmds = ["cd ../.. && bun install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd ../.. && bun run build:shared && bun run build:web"]
+
+[start]
+cmd = "bun run .output/server/index.mjs"
