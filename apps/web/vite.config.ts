@@ -28,7 +28,7 @@ export default defineConfig({
         routeFileIgnorePattern: '(^|/)(page\\.tsx$|.*\\/page\\.tsx$|route\\.ts$|.*\\/route\\.ts$|columns\\.tsx$|queries\\.ts$)',
       },
     }),
-    nitro(),
+    nitro({ preset: 'bun' }),
     viteReact(),
   ],
 })
