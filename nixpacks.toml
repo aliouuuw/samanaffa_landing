@@ -1,0 +1,12 @@
+# Nixpacks configuration for Bun monorepo (web app)
+[phases.setup]
+nixPkgs = ["bun"]
+
+[phases.install]
+cmds = ["bun install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["bun run build:shared", "bun run build:web"]
+
+[start]
+cmd = "cd apps/web && bun run start"
