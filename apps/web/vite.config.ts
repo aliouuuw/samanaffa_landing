@@ -3,7 +3,6 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
-import { nitro } from 'nitro/vite'
 
 export default defineConfig({
   server: {
@@ -18,22 +17,6 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     tsconfigPaths(),
-    nitro({
-      devProxy: {
-        '/api/admin': {
-          target: 'http://localhost:8787',
-          changeOrigin: true,
-        },
-        '/api/kyc': {
-          target: 'http://localhost:8787',
-          changeOrigin: true,
-        },
-        '/api/payments': {
-          target: 'http://localhost:8787',
-          changeOrigin: true,
-        },
-      },
-    }),
     tanstackStart({
       srcDirectory: 'src',
       start: {
