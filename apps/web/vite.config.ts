@@ -5,33 +5,42 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
 import { nitro } from 'nitro/vite'
 
-export default defineConfig({
-  server: {
-    port: Number(process.env.PORT) || 3000,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8787',
-        changeOrigin: true,
-      },
-    },
-  },
-  plugins: [
-    tailwindcss(),
-    tsconfigPaths(),
-    tanstackStart({
-      srcDirectory: 'src',
-      start: {
-        entry: 'src/start.ts',
-      },
-      router: {
-        routesDirectory: 'app',
-        routeFileIgnorePattern: '(^|/)(page\\.tsx$|.*\\/page\\.tsx$|route\\.ts$|.*\\/route\\.ts$|columns\\.tsx$|queries\\.ts$)',
-      },
-    }),
-    nitro({
+export default defineConfig((): any => {
+  let nitroPlugin: ReturnType<typeof nitro> | undefined
+  try {
+    nitroPlugin = nitro({
       preset: 'bun',
       sourcemap: false,
-    }),
-    viteReact(),
-  ],
+    })
+  } catch (err) {
+    console.warn('Failed to initialize nitro/vite plugin; continuing without it.', err)
+  }
+
+  return {
+    server: {
+      port: Number(process.env.PORT) || 3000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8787',
+          changeOrigin: true,
+        },
+      },
+    },
+    plugins: [
+      tailwindcss(),
+      tsconfigPaths(),
+      tanstackStart({
+        srcDirectory: 'src',
+        start: {
+          entry: 'src/start.ts',
+        },
+        router: {
+          routesDirectory: 'app',
+          routeFileIgnorePattern: '(^|/)(page\\.tsx$|.*\\/page\\.tsx$|route\\.ts$|.*\\/route\\.ts$|columns\\.tsx$|queries\\.ts$)',
+        },
+      }),
+      nitroPlugin,
+      viteReact(),
+    ].filter(Boolean) as any,
+  }
 })
