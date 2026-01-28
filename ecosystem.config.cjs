@@ -4,7 +4,8 @@ module.exports = {
       name: 'samanaffa-web',
       cwd: './apps/web',
       script: '.output/server/index.mjs',
-      interpreter: 'node',
+      interpreter: 'bun',
+      exec_mode: 'fork',
       env: {
         NODE_ENV: 'production',
         PORT: 3000,
@@ -19,6 +20,7 @@ module.exports = {
       cwd: './apps/backend',
       script: 'src/server.ts',
       interpreter: 'bun',
+      exec_mode: 'fork',
       env: {
         NODE_ENV: 'production',
         PORT: 8787,
